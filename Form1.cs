@@ -45,11 +45,11 @@ namespace Responsi2
         {
             try
             {
-                // Load data developer
+                // load data developer
                 dgvDeveloper.DataSource = developerRepo.GetDataTable();
                 dgvDeveloper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-                // Load data proyek
+                // load data proyek
                 dgvProyek.DataSource = proyekRepo.GetDataTable();
                 dgvProyek.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
@@ -165,7 +165,7 @@ namespace Responsi2
         {
             try
             {
-                // Cek apakah ada data yang dipilih
+                // cek apakah ada data yang dipilih
                 if (selectedDevId == 0)
                 {
                     MessageBox.Show("Pilih data developer yang akan diupdate!\n" +
@@ -174,11 +174,11 @@ namespace Responsi2
                     return;
                 }
 
-                // Validasi input
+                // validasi input
                 if (!ValidateInput())
                     return;
 
-                // Konfirmasi update
+                // konfirmasi update
                 var result = MessageBox.Show($"Apakah Anda yakin ingin mengupdate data developer?\n\n" +
                     $"Nama: {txtNamaDeveloper.Text}",
                     "Konfirmasi Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -191,7 +191,7 @@ namespace Responsi2
                 int fiturSelesai = int.Parse(txtFiturSelesai.Text);
                 int jumlahBug = int.Parse(txtJumlahBug.Text);
 
-                // Polymorphism - Buat instance berdasarkan status kontrak
+                // polymorphism - buat instance berdasarkan status kontrak
                 Developer developer;
                 if (statusKontrak.Equals("Fulltime", StringComparison.OrdinalIgnoreCase))
                 {
@@ -214,7 +214,7 @@ namespace Responsi2
                     );
                 }
 
-                // Validasi Budget - Cek apakah budget mencukupi (exclude developer yang sedang diupdate)
+                // Validasi Budget cek budget cukup apa nga
                 decimal budgetProyek = proyekRepo.GetBudgetById(idProyek);
                 decimal totalGajiLain = proyekRepo.GetTotalGajiByProyek(idProyek, selectedDevId);
                 decimal gajiDeveloperBaru = developer.HitungTotalGaji();
@@ -237,7 +237,7 @@ namespace Responsi2
                     return;
                 }
 
-                // Update ke database
+                // update ke db
                 if (developerRepo.Update(developer))
                 {
                     MessageBox.Show(
@@ -321,7 +321,6 @@ namespace Responsi2
                     selectedDevId = Convert.ToInt32(row.Cells["ID"].Value);
                     txtNamaDeveloper.Text = row.Cells["Nama Developer"].Value.ToString();
 
-                    // Set proyek combobox
                     string proyekName = row.Cells["Proyek"].Value.ToString() ?? "";
                     cbProyek.Text = proyekName;
 
@@ -329,7 +328,7 @@ namespace Responsi2
                     txtFiturSelesai.Text = row.Cells["Fitur Selesai"].Value.ToString();
                     txtJumlahBug.Text = row.Cells["Jumlah Bug"].Value.ToString();
 
-                    // Highlight selected row
+                    //higlight
                     dgvDeveloper.ClearSelection();
                     row.Selected = true;
                 }
@@ -343,7 +342,7 @@ namespace Responsi2
 
         private bool ValidateInput()
         {
-            // Validasi Nama Developer
+            // validate ama developer
             if (string.IsNullOrWhiteSpace(txtNamaDeveloper.Text))
             {
                 MessageBox.Show("Nama developer harus diisi!",
@@ -352,7 +351,7 @@ namespace Responsi2
                 return false;
             }
 
-            // Validasi Proyek
+            // Proyek
             if (cbProyek.SelectedValue == null || cbProyek.SelectedIndex == -1)
             {
                 MessageBox.Show("Pilih proyek terlebih dahulu!",
@@ -361,7 +360,7 @@ namespace Responsi2
                 return false;
             }
 
-            // Validasi Status Kontrak
+            // status kontrak
             if (string.IsNullOrWhiteSpace(cbStatusKontrak.Text))
             {
                 MessageBox.Show("Pilih status kontrak (Freelance/Fulltime)!",
@@ -370,7 +369,7 @@ namespace Responsi2
                 return false;
             }
 
-            // Validasi Fitur Selesai
+            // selesai
             if (!int.TryParse(txtFiturSelesai.Text, out int fitur))
             {
                 MessageBox.Show("Fitur selesai harus berupa angka!",
@@ -389,7 +388,7 @@ namespace Responsi2
                 return false;
             }
 
-            // Validasi Jumlah Bug
+            // jumlah bug
             if (!int.TryParse(txtJumlahBug.Text, out int bug))
             {
                 MessageBox.Show("Jumlah bug harus berupa angka!",
@@ -428,7 +427,7 @@ namespace Responsi2
             }
         }
 
-        // Keep existing event handlers untuk compatibility
+        // event handlers
         private void label1_Click(object sender, EventArgs e)
         {
         }
